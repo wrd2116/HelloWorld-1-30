@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 
-// Change this to any existing table in your Supabase project (e.g. 'todos', 'products', 'countries')
-const TABLE_NAME = 'countries'
+// Set NEXT_PUBLIC_SUPABASE_TABLE in .env.local to your table name, or we use 'countries'
+const TABLE_NAME =
+  process.env.NEXT_PUBLIC_SUPABASE_TABLE ?? 'countries'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -18,9 +19,10 @@ export default async function Home() {
             Table &quot;{TABLE_NAME}&quot;: {error.message}
           </p>
           <p className="text-sm text-gray-500">
-            Edit <code className="bg-gray-100 px-1 rounded">TABLE_NAME</code> in{' '}
-            <code className="bg-gray-100 px-1 rounded">src/app/page.tsx</code> to
-            use an existing table in your project.
+            Set <code className="bg-gray-100 px-1 rounded">NEXT_PUBLIC_SUPABASE_TABLE</code> in{' '}
+            <code className="bg-gray-100 px-1 rounded">.env.local</code> to an
+            existing table name (e.g. <code className="bg-gray-100 px-1 rounded">todos</code>), or
+            add a table in Supabase Dashboard → Table Editor.
           </p>
         </div>
       </main>
@@ -55,7 +57,7 @@ export default async function Home() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {rows.map((row, index) => (
             <article
-              key={(row as Record<string, unknown>).id ?? index}
+              key={String((row as Record<string, unknown>).id ?? index)}
               className="bg-white rounded-lg border border-gray-200 shadow-sm p-5 hover:shadow-md transition-shadow"
             >
               {columns.map((key) => {
