@@ -1,8 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 
-// Set NEXT_PUBLIC_SUPABASE_TABLE in .env.local to your table name, or we use 'countries'
+// Set NEXT_PUBLIC_SUPABASE_TABLE in .env.local to your table name, or we use 'bug_reports'
 const TABLE_NAME =
-  process.env.NEXT_PUBLIC_SUPABASE_TABLE ?? 'countries'
+  process.env.NEXT_PUBLIC_SUPABASE_TABLE ?? 'bug_reports'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -21,7 +21,7 @@ export default async function Home() {
           <p className="text-sm text-gray-500">
             Set <code className="bg-gray-100 px-1 rounded">NEXT_PUBLIC_SUPABASE_TABLE</code> in{' '}
             <code className="bg-gray-100 px-1 rounded">.env.local</code> to an
-            existing table name (e.g. <code className="bg-gray-100 px-1 rounded">todos</code>), or
+            existing table name (e.g. <code className="bg-gray-100 px-1 rounded">bug_reports</code>), or
             add a table in Supabase Dashboard → Table Editor.
           </p>
         </div>
