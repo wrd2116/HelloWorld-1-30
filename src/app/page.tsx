@@ -1,11 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
+import { GatedUI } from './gated-ui'
 
-// Set NEXT_PUBLIC_SUPABASE_TABLE in .env.local to your table name, or we use 'bug_reports'
-const TABLE_NAME =
-  process.env.NEXT_PUBLIC_SUPABASE_TABLE ?? 'bug_reports'
+const TABLE_NAME = process.env.NEXT_PUBLIC_SUPABASE_TABLE ?? 'bug_reports'
 
 export default async function Home() {
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return <GatedUI />
+
   const { data: rows, error } = await supabase.from(TABLE_NAME).select('*')
 
   if (error) {
